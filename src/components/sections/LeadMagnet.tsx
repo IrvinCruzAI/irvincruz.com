@@ -72,14 +72,14 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
 
       // Also send to Make webhook for existing automation
       try {
-        await fetch('https://hook.us1.make.com/zxr0yeq7eyj5o7i2v7o29831a4euf1lq', {
+        await fetch('https://hook.us2.make.com/e8wop1bgci021mvbb4spbjl2xvzn6qjo', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             email: email,
-            source: 'AI Readiness Checklist',
+            source: 'AI Readiness Checklist + 5 Questions Guide',
             timestamp: new Date().toISOString()
           })
         });
@@ -309,7 +309,7 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
                 transition={{ delay: 0.3 }}
                 className="text-xl font-bold text-white mb-2"
               >
-               AI Readiness Checklist Delivered!
+               Your AI Guide is on the Way!
               </motion.h3>
               
               <motion.p
@@ -318,11 +318,11 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
                 transition={{ delay: 0.4 }}
                 className="text-green-100 text-sm"
               >
-               Your <span className="font-semibold text-white">AI Readiness Checklist</span> is on its way to{' '}
+               Your <span className="font-semibold text-white">AI Readiness Checklist + 5 Questions Guide</span> is heading to{' '}
                <span className="font-semibold text-white">{email}</span>
                <br /><br />
                <span className="text-xs text-green-200">
-                 Check your inbox (and spam folder) for your personalized AI readiness assessment.
+                 Check your inbox (and spam folder) in the next few minutes.
                </span>
               </motion.p>
             </div>
