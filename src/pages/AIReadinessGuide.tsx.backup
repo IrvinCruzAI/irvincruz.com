@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { QualifyingForm } from '../components/forms/QualifyingForm';
 import { CheckCircle2, Calendar, ArrowRight } from 'lucide-react';
 
 export function AIReadinessGuide() {
@@ -531,11 +530,6 @@ export function AIReadinessGuide() {
           </div>
 
           {/* Final CTA */}
-          {/* Qualifying Form Section */}
-          <div className="mb-12">
-            <QualifyingForm />
-          </div>
-
           <div className="text-center">
             <div className="inline-block p-8 bg-gradient-to-r from-teal-500/10 to-indigo-500/10 border-2 border-teal-500/30 rounded-2xl">
               <p className="text-teal-100/90 mb-6">
