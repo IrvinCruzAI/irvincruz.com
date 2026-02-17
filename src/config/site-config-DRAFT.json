@@ -1,0 +1,342 @@
+{
+  "personal": {
+    "name": "Irvin Cruz",
+    "tagline": "Automate the predictable. Govern the unpredictable.",
+    "bio": "I build AI systems that eliminate friction and give teams their time back. Most organizations waste hours on repetitive work—lead routing, document processing, follow-ups, data entry—tasks that steal focus from strategy and growth. I design AI workflows, multi-agent systems, and governance frameworks that automate the predictable while keeping humans in control of what matters. I'm a Certified Chief AI Officer with proven results at Disney (8x digital sales growth), Michaelis Events ($2.1M revenue influenced), and across 6 production AI systems. If your team is buried in manual work and ready to focus on what actually moves the needle, let's talk.",
+    "location": "Orlando, FL",
+    "email": "irvincruz.work@gmail.com",
+    "phone": "+1 863 969 7342",
+    "photo": "/profile-pic (2).png",
+    "website": "https://www.irvincruz.com",
+    "credentials": [
+      "Certified Chief AI Officer (CAIO)",
+      "Former Disney Digital Product Operations Manager",
+      "Former Michaelis Events Director of Marketing & Technology",
+      "AI BuildLab Graduate",
+      "Google Cloud Generative AI Fundamentals"
+    ]
+  },
+  "businesses": [
+    {
+      "name": "Control Layer Sprint",
+      "price": "$5,000",
+      "duration": "28 days",
+      "url": "https://calendly.com/irvincruz",
+      "description": "Your team wastes hours on repetitive tasks software should handle. This 28-day sprint builds one complete AI workflow—integrated, tested, and documented. Includes workflow mapping, implementation, handover training, and 2 rounds of revisions. Best for teams ready to ship fast.",
+      "cta": "Book Your Sprint",
+      "ctaUrl": "https://calendly.com/irvincruz"
+    },
+    {
+      "name": "Paid Diagnostic",
+      "price": "$1,500",
+      "duration": "Flat rate",
+      "url": "https://calendly.com/irvincruz",
+      "description": "You know AI can help but aren't sure where to start. This diagnostic maps exactly where AI eliminates bottlenecks in your operations and delivers a prioritized roadmap with implementation recommendations. Best for leaders exploring options without wasting time on guesswork.",
+      "cta": "Get Your Diagnostic",
+      "ctaUrl": "https://calendly.com/irvincruz"
+    },
+    {
+      "name": "FutureCrafters Labs",
+      "price": "$2,500/month",
+      "duration": "Monthly retainer",
+      "url": "https://calendly.com/irvincruz",
+      "description": "You need ongoing AI workflow support without hiring a full team. Labs provides continuous implementation: automation refinement, integration maintenance, documentation updates, and priority queue access. Best for organizations scaling AI adoption across departments.",
+      "cta": "Request Labs Access",
+      "ctaUrl": "https://calendly.com/irvincruz"
+    },
+    {
+      "name": "AI Exploration Session",
+      "price": "$500",
+      "duration": "2 hours",
+      "url": "https://calendly.com/irvincruz",
+      "description": "Not sure if AI is right for your business? This 2-hour working session assesses your operations, identifies high-impact automation opportunities, and delivers a clear recommendation: build, wait, or pass. No pressure, just clarity.",
+      "cta": "Book Exploration Session",
+      "ctaUrl": "https://calendly.com/irvincruz"
+    }
+  ],
+  "projects": [
+    {
+      "name": "AI Governance Assistant",
+      "description": "Enterprise AI governance platform for regulated industries. Evaluate AI initiatives against mission criteria, classify risk automatically, generate RAID analysis, and route through appropriate governance paths. Built for healthcare (AdventHealth demo), adaptable to finance, government, or any compliance-heavy environment.",
+      "status": "Live",
+      "hostedUrl": "https://adventhealthaiportal.manus.space",
+      "githubUrl": "https://github.com/IrvinCruzAI/AI-Governance-Assistant",
+      "image": "/placeholder-governance.png",
+      "technologies": ["React 19", "TypeScript", "tRPC 11", "Drizzle ORM", "MySQL/TiDB", "OAuth RBAC", "AI Structured Outputs"],
+      "keyFeatures": [
+        "Industry-agnostic governance framework (healthcare demo included)",
+        "AI-powered initiative evaluation against custom mission criteria",
+        "Automated risk classification and RAID analysis",
+        "Compliance-ready audit trails and reproducible scoring",
+        "Admin portal for mission criteria configuration",
+        "Role-based access control with OAuth integration"
+      ],
+      "tags": ["Enterprise", "Governance", "Compliance", "Healthcare", "AI Safety", "Audit Trail"],
+      "challenge": "Enterprises need AI governance that's fast enough to enable innovation but strict enough to prevent harm in regulated environments.",
+      "solution": "Built configurable governance platform with AI-powered evaluation, automated risk classification, and transparent audit trails. Healthcare-specific demo with AdventHealth case study."
+    },
+    {
+      "name": "WebinarStudio",
+      "description": "Enterprise webinar content pipeline. Takes webinar recordings/transcripts and generates 8+ deliverables: landing pages, email sequences, run-of-show documents, speaker checklists, social posts, and more. QA validation system ensures completeness before delivery.",
+      "status": "Live",
+      "hostedUrl": "https://webinarstudio.bolt.host",
+      "githubUrl": "https://github.com/IrvinCruzAI/WebinarStudio",
+      "image": "/placeholder-webinarstudio.png",
+      "technologies": ["React 18", "TypeScript", "Vite", "Supabase", "Zod", "Zustand", "Document Generation (.docx)", "AI Pipeline Orchestration"],
+      "keyFeatures": [
+        "Complete webinar content generation pipeline (8+ deliverables)",
+        "QA validation system with structured schema (Zod)",
+        "Document export (.docx) for run-of-show and checklists",
+        "Supabase backend for persistent storage",
+        "Multi-phase pipeline with progress tracking",
+        "Enterprise-grade error handling and validation"
+      ],
+      "tags": ["Enterprise", "Content Pipeline", "Events", "Marketing Automation", "Document Generation"],
+      "challenge": "Event marketers spend 10-20 hours manually creating webinar collateral after each event. Agencies managing 50+ webinars/year waste hundreds of hours on repetitive content.",
+      "solution": "Built AI pipeline that understands webinar structure, validates completeness, and generates production-ready deliverables. 115 TypeScript files, 1.5MB source code."
+    },
+    {
+      "name": "Marketing Dashboard",
+      "description": "AI Marketing Operations System — 6 generators in one tool (SEO articles, email campaigns, social posts, lead magnets, content repurposing, images). Business Context Engine stores ICP, brand voice, and strategy for consistent on-brand content.",
+      "status": "Live",
+      "hostedUrl": "https://ai-powered-marketing-4nlf.bolt.host",
+      "githubUrl": "https://github.com/IrvinCruzAI/Marketing_Dashboard",
+      "image": "/placeholder-marketing.png",
+      "technologies": ["React 18", "TypeScript", "Vite", "OpenAI GPT-4", "DALL-E 3", "IndexedDB (offline-first)"],
+      "keyFeatures": [
+        "6 AI-powered marketing generators (SEO, email, social, lead magnets, repurposing, images)",
+        "Business Context Engine (ICP targeting, brand voice, multi-channel strategy)",
+        "Offline-first architecture with IndexedDB persistence",
+        "Brand consistency across all content types",
+        "Multi-channel content strategy automation"
+      ],
+      "tags": ["Marketing", "AI Content", "Brand Voice", "SaaS", "Multi-Tool"],
+      "challenge": "Solo founders need marketing presence but can't afford teams. Agencies managing 10 clients struggle with brand voice consistency. Generic AI tools produce off-brand content.",
+      "solution": "Built context-aware marketing system that understands ICP and brand voice. Produces consistent, on-brand content across 6 generators without hiring a team."
+    },
+    {
+      "name": "NewsGen AI",
+      "description": "Transform news headlines into publication-ready articles in 10 seconds. Multi-provider AI system (Gemini → Groq → OpenAI automatic fallback) with request caching and rate limiting. Production-ready with comprehensive error handling.",
+      "status": "Live",
+      "hostedUrl": "https://newsgenai.bolt.host",
+      "githubUrl": "https://github.com/IrvinCruzAI/AI_News_Generator",
+      "image": "/placeholder-newsgen.png",
+      "technologies": ["React 18", "TypeScript", "Vite", "Multi-AI Provider (Gemini, Groq, OpenAI)", "Request Caching", "Rate Limiting"],
+      "keyFeatures": [
+        "10-second article generation with structured H2/H3 content",
+        "Multi-provider automatic fallback (Gemini → Groq → OpenAI)",
+        "Request caching and rate limiting for cost optimization",
+        "Real-time news search across thousands of sources",
+        "Article management with gallery and list views",
+        "Full-screen reader with Markdown support"
+      ],
+      "tags": ["AI", "Content Generation", "News", "Multi-Provider", "Production-Ready"],
+      "challenge": "Content marketers need 20+ articles/week. Manual writing takes 2-3 hours per article. Generic AI tools lack structure and require heavy editing.",
+      "solution": "Built fast (10 seconds), structured (H2/H3 sections), production-ready system with automatic AI provider fallback and cost optimization."
+    },
+    {
+      "name": "YouTube to Leads AI",
+      "description": "Complete marketing funnel from one YouTube URL. Generates 13 AI-powered assets: lead magnets, landing pages, email sequences, social content, SEO articles, quizzes, and more. Sequential AI pipeline with persistent job queue.",
+      "status": "Live",
+      "hostedUrl": "https://youtube-to-leads-ai.bolt.host",
+      "githubUrl": "https://github.com/IrvinCruzAI/Youtube_Video_to_LeadGen_Marketing_AI_Tool",
+      "image": "/placeholder-youtube.png",
+      "technologies": ["React 18", "TypeScript", "Zustand", "Multi-API (YouTube + OpenRouter)", "LocalStorage", "13-Step Pipeline"],
+      "keyFeatures": [
+        "13 complete marketing assets from one YouTube URL",
+        "Multi-step AI orchestration with specialized prompts",
+        "Persistent job queue with progress tracking",
+        "Lead magnets, landing pages, email sequences generated automatically",
+        "Social media content and SEO articles included",
+        "Complete funnel thinking (input → 13 outputs)"
+      ],
+      "tags": ["Marketing Automation", "Lead Generation", "Content Repurposing", "Funnel Builder", "YouTube"],
+      "challenge": "Content creators produce YouTube videos but need complete marketing funnels (lead magnets, emails, landing pages). Manual creation takes weeks.",
+      "solution": "Built AI pipeline that transforms one video into 13 marketing assets. Sequential orchestration with progress tracking and persistent queue."
+    },
+    {
+      "name": "PostCraft",
+      "description": "Voice-to-LinkedIn content engine. Speak your ideas, get formatted LinkedIn posts with AI-generated images. Brand voice personalization with company details baked in. Webhook architecture for backend integration.",
+      "status": "Live",
+      "hostedUrl": "https://postcraft.bolt.host",
+      "githubUrl": "https://github.com/IrvinCruzAI/Linkedin_PostCraft",
+      "image": "/placeholder-postcraft.png",
+      "technologies": ["React 18", "TypeScript", "Vite", "Voice API", "Webhook Integration", "LocalStorage", "Content Personalization"],
+      "keyFeatures": [
+        "Voice transcription as primary input (fastest content creation)",
+        "Brand voice personalization (company name, website, LinkedIn profile)",
+        "AI-generated images matching post content",
+        "Webhook architecture for extensible backend integration",
+        "Content history with localStorage persistence",
+        "Generate → Edit → Publish workflow"
+      ],
+      "tags": ["Voice Interface", "LinkedIn", "Content Creation", "Brand Voice", "Social Media"],
+      "challenge": "Professionals have ideas while driving or walking but can't type. Voice is 3x faster than typing. Generic AI tools ignore branding.",
+      "solution": "Built voice-first content engine that applies brand voice, formats for LinkedIn, and generates matching images—all in one workflow."
+    }
+  ],
+  "blogUrl": "https://medium.com/@irvincruz",
+  "caseStudies": [
+    {
+      "title": "AI-Powered Lead Conversion Engine",
+      "company": "Michaelis Events",
+      "role": "Director of Marketing & Technology (2024–Present)",
+      "outcomes": [
+        "$2.1M annual revenue influenced",
+        "30% corporate acquisition increase",
+        "25% repeat bookings increase",
+        "15 hours/week saved",
+        "15% conversion uplift",
+        "40% reduction in manual effort"
+      ],
+      "description": "Led complete digital transformation: brand refresh, WordPress rebuild, client portal connected to GoHighLevel CRM, multi-step lead generation funnel with automated capture/scoring/nurture, full funnel orchestration from first touch to booking. Built first marketing team and implemented AI-powered systems across operations.",
+      "technologies": ["Make", "Zapier", "GoHighLevel", "ChatGPT", "WordPress", "CRM Integration", "Marketing Automation"]
+    },
+    {
+      "title": "Digital Operations Optimization",
+      "company": "The Walt Disney Company",
+      "role": "Digital Product Operations Manager (2022)",
+      "outcomes": [
+        "8x online sales increase",
+        "20% guest satisfaction improvement",
+        "90% delivery time reduction",
+        "50% engagement lift"
+      ],
+      "description": "Led cross-functional digital programs aligning Marketing, Digital, and Technology teams. Delivered platform integrations across mobile and e-commerce systems, streamlined program coordination, clarified dependencies to accelerate delivery cadence.",
+      "technologies": ["Product Operations", "E-commerce", "Mobile App Integration", "Cross-functional Leadership", "Platform Integration"]
+    },
+    {
+      "title": "Multi-Agent AI Operations System",
+      "company": "FutureCrafters",
+      "role": "Founder (2022–Present)",
+      "outcomes": [
+        "40% manual effort reduction",
+        "25% engagement increase",
+        "Zero context loss across sessions",
+        "6 production AI systems built",
+        "5-agent orchestration system operational"
+      ],
+      "description": "Built complete AI operations infrastructure: Sol (memory/project management), Gigawatt (prompt engineering), Cipher (process documentation), Nexus (network intelligence with 1,023 contacts mapped), Rory (content production), plus 12+ custom GPTs for specialized workflows. Developed governance framework, token optimization system, and multi-agent orchestration protocols.",
+      "technologies": ["Claude API", "ChatGPT API", "Multi-Agent Orchestration", "Memory Systems", "Workflow Automation", "Token Optimization", "Custom GPT Development"]
+    },
+    {
+      "title": "Organic Growth Engine",
+      "company": "EDA Inc.",
+      "role": "Digital Strategy & Analytics Manager (2022-2023)",
+      "outcomes": [
+        "22% web traffic increase",
+        "40% MoM social engagement growth",
+        "10% email open rate improvement",
+        "500+ LinkedIn followers gained"
+      ],
+      "description": "Designed 360° brand identity and digital presence with AI-assisted content strategy and automated workflows. Implemented SEO optimization, social media automation, and email marketing systems.",
+      "technologies": ["AI Content Strategy", "Marketing Automation", "SEO", "Social Media Management", "Email Marketing"]
+    }
+  ],
+  "socialProof": [
+    {
+      "name": "Certified Chief AI Officer",
+      "logo": "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "description": "CAIO Certification"
+    },
+    {
+      "name": "Multi-Agent Orchestration",
+      "logo": "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "description": "5-Agent Production System"
+    },
+    {
+      "name": "Make / n8n",
+      "logo": "https://images.pexels.com/photos/5483077/pexels-photo-5483077.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "description": "Advanced Automation Architecture"
+    },
+    {
+      "name": "Claude / GPT",
+      "logo": "https://images.pexels.com/photos/8438918/pexels-photo-8438918.jpeg?auto=compress&cs=tinysrgb&w=200",
+      "description": "LLM Integration & Prompt Engineering"
+    }
+  ],
+  "timeline": [
+    {
+      "year": "2024–Present",
+      "title": "Director of Marketing & Technology",
+      "company": "Michaelis Events",
+      "description": "$2.1M revenue influenced through AI adoption and automation workflows. Built first marketing team and implemented AI-powered lead conversion systems. 30% corporate acquisition increase, 25% repeat bookings lift.",
+      "type": "work"
+    },
+    {
+      "year": "2022–Present",
+      "title": "Founder & CEO",
+      "company": "FutureCrafters",
+      "description": "Built 6 production AI systems and 5-agent orchestration infrastructure. 40% manual effort reduction through multi-agent workflows. Developed AI governance framework and token optimization systems. Certified Chief AI Officer.",
+      "type": "work"
+    },
+    {
+      "year": "2022–2023",
+      "title": "Digital Strategy & Analytics Manager",
+      "company": "EDA Inc.",
+      "description": "22% traffic lift and 40% MoM engagement growth through AI-assisted content strategy and automated workflows. Implemented SEO optimization and social media automation systems.",
+      "type": "work"
+    },
+    {
+      "year": "2022",
+      "title": "Digital Product Operations Manager",
+      "company": "The Walt Disney Company",
+      "description": "8x online sales increase and 20% satisfaction improvement through mobile app e-commerce integration and digital operations optimization. Led cross-functional programs across Marketing, Digital, and Technology.",
+      "type": "work"
+    },
+    {
+      "year": "2021",
+      "title": "Digital Marketing Strategist",
+      "company": "Designzillas",
+      "description": "Doubled organic traffic and achieved 55% CPL reduction through SEO, PPC, and conversion optimization systems.",
+      "type": "work"
+    },
+    {
+      "year": "2015–2020",
+      "title": "Marketing & Promotions Manager",
+      "company": "Entercom Communications (now Audacy)",
+      "description": "18% market share lift and 2M+ impressions generated through large-scale event marketing and brand leadership. Managed multi-million dollar event portfolios.",
+      "type": "work"
+    },
+    {
+      "year": "2011–2016",
+      "title": "Bachelor's Degree, Multi/Interdisciplinary Studies",
+      "company": "University of Central Florida",
+      "description": "Multi-Media Communications and Digital Media based Business Marketing and ECommerce",
+      "type": "education"
+    }
+  ],
+  "socialLinks": [
+    {
+      "platform": "LinkedIn",
+      "url": "https://www.linkedin.com/in/irvincruzrodriguez/",
+      "username": "Irvin Cruz",
+      "followers": "1,023 connections"
+    },
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/IrvinCruzAI",
+      "username": "IrvinCruzAI",
+      "followers": "6 public repositories"
+    },
+    {
+      "platform": "Email",
+      "url": "mailto:irvincruz.work@gmail.com",
+      "username": "irvincruz.work@gmail.com",
+      "followers": ""
+    }
+  ],
+  "leadMagnet": {
+    "title": "AI Readiness Checklist",
+    "tagline": "Find out where AI can help in under 5 minutes.",
+    "description": "A practical checklist that shows you where your team is losing time to repetitive work and where AI can help. No jargon, no hype. Just a clear map of what's possible and what to do next.",
+    "cta": "Download the AI Readiness Checklist",
+    "type": "checklist"
+  },
+  "seo": {
+    "title": "Irvin Cruz — AI Systems Architect & Certified Chief AI Officer",
+    "description": "Irvin Cruz builds AI workflows and multi-agent systems that eliminate friction and give teams their time back. Certified Chief AI Officer with proven results at Disney, Michaelis Events, and 6 production AI systems.",
+    "keywords": ["Irvin Cruz", "AI workflow", "automation", "CAIO", "Chief AI Officer", "AI systems", "multi-agent", "FutureCrafters", "AI governance", "Orlando AI consultant"],
+    "ogImage": "/profile-pic (2).png"
+  }
+}
