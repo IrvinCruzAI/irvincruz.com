@@ -15,68 +15,97 @@ interface LeadMagnetProps {
   onClose: () => void;
 }
 
+interface FormData {
+  name: string;
+  email: string;
+  company: string;
+  role: string;
+  challenge: string;
+}
+
 export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
-  const [email, setEmail] = useState('');
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    company: '',
+    role: '',
+    challenge: ''
+  });
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Partial<FormData>>({});
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-    // Clear error when user starts typing
-    if (emailError) {
-      setEmailError('');
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear field error when user starts typing
+    if (fieldErrors[name as keyof FormData]) {
+      setFieldErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    setEmailError('');
+    setFieldErrors({});
 
-    // Validate email before submitting
-    if (!email) {
-      setEmailError('Email address is required');
-      setIsLoading(false);
-      return;
+    // Validate all fields
+    const errors: Partial<FormData> = {};
+    
+    if (!formData.name.trim()) errors.name = 'Name is required';
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!validateEmail(formData.email)) {
+      errors.email = 'Please enter a valid email';
     }
+    if (!formData.company.trim()) errors.company = 'Company name is required';
+    if (!formData.role.trim()) errors.role = 'Role is required';
+    if (!formData.challenge || formData.challenge === '') errors.challenge = 'Please select a challenge';
 
-    if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address');
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       setIsLoading(false);
       return;
     }
 
     try {
       // Send to Make.com webhook
-      await fetch('https://hook.us2.make.com/e8wop1bgci021mvbb4spbjl2xvzn6qjo', {
+      const response = await fetch('https://hook.us2.make.com/e8wop1bgci021mvbb4spbjl2xvzn6qjo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: email,
-          source: 'AI Readiness Checklist + 5 Questions Guide',
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          role: formData.role,
+          challenge: formData.challenge,
+          source: 'AI Readiness Guide',
           timestamp: new Date().toISOString()
         })
       });
 
+      if (!response.ok) {
+        throw new Error(`Webhook returned ${response.status}`);
+      }
+
       setSubmitted(true);
-      // Auto-close after 5 seconds to give user time to read
+      // Auto-close after 6 seconds
       setTimeout(() => {
         onClose();
         setSubmitted(false);
-        setEmail('');
-      }, 5000);
+        setFormData({ name: '', email: '', company: '', role: '', challenge: '' });
+      }, 6000);
     } catch (err) {
-      setError('Something went wrong. Please try again.');
+      setError('Something went wrong. Please try again or email irvin@futurecrafters.ai directly.');
       console.error('Submission error:', err);
     } finally {
       setIsLoading(false);
@@ -88,7 +117,7 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
       <div className="relative overflow-hidden">
         {!submitted ? (
           <>
-            {/* Dark gradient background matching header */}
+            {/* Dark gradient background */}
             <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(43,47,138,0.2)_0%,transparent_50%)]" />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,179,166,0.2)_0%,transparent_50%)]" />
@@ -104,18 +133,9 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
               transition={{ duration: 6, repeat: Infinity }}
               className="absolute top-4 right-8 w-16 h-16 bg-gradient-to-r from-teal-400/30 to-indigo-400/30 rounded-full blur-2xl"
             />
-            <motion.div
-              animate={{ 
-                y: [0, 8, 0],
-                rotate: [0, -2, 2, 0],
-                scale: [1, 0.95, 1]
-              }}
-              transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-              className="absolute bottom-4 left-8 w-12 h-12 bg-gradient-to-r from-indigo-400/30 to-teal-400/30 rounded-full blur-2xl"
-            />
 
-            <div className="relative z-10 text-center p-6">
-              {/* Close button - positioned absolutely with high z-index */}
+            <div className="relative z-10 text-center p-6 max-w-2xl mx-auto">
+              {/* Close button */}
               <button
                 onClick={onClose}
                 className="absolute top-2 right-2 p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-lg transition-all duration-200 z-20 backdrop-blur-sm"
@@ -123,7 +143,7 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
                 <X size={18} />
               </button>
 
-              {/* Icon with enhanced styling */}
+              {/* Icon */}
               <motion.div
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
@@ -132,12 +152,11 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-indigo-600 rounded-xl blur-lg opacity-50" />
                 <div className="relative w-full h-full bg-gradient-to-r from-teal-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-2xl">
-                  {leadMagnet.type === 'checklist' && <Download className="text-white" size={16} />}
-                  {leadMagnet.type === 'newsletter' && <Mail className="text-white" size={16} />}
+                  <Download className="text-white" size={16} />
                 </div>
               </motion.div>
 
-              {/* Title with gradient text */}
+              {/* Title */}
               <motion.h3
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -145,7 +164,7 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
                 className="text-xl font-bold mb-2"
               >
                 <span className="bg-gradient-to-r from-white via-teal-100 to-indigo-200 bg-clip-text text-transparent">
-                  {leadMagnet.title}
+                  Get Your AI Readiness Guide
                 </span>
               </motion.h3>
               
@@ -154,157 +173,186 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-teal-100 mb-4 leading-relaxed text-sm"
+                className="text-teal-100 mb-6 leading-relaxed text-sm"
               >
-                {leadMagnet.description}
+                Plus, get a personalized strategy session to discuss your specific AI challenges
               </motion.p>
 
-              {/* Features list - horizontal layout */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="flex flex-wrap justify-center gap-2 mb-4"
-              >
-                {[
-                  { icon: Sparkles, text: "No jargon" },
-                  { icon: TrendingUp, text: "Under 5 minutes" },
-                  { icon: Users, text: "Actionable next steps" }
-                ].map((feature, index) => (
-                  <motion.div
-                    key={feature.text}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 + index * 0.1 }}
-                    className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1 border border-white/20"
-                  >
-                    <div className="w-4 h-4 bg-white/20 rounded flex items-center justify-center flex-shrink-0">
-                      <feature.icon size={10} className="text-teal-300" />
-                    </div>
-                    <span className="text-white text-xs font-medium">{feature.text}</span>
-                  </motion.div>
-                ))}
-              </motion.div>
-
               {/* Form */}
-              <motion.form
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                onSubmit={handleSubmit} 
-                className="space-y-3"
-              >
-                <div className="relative">
+              <form onSubmit={handleSubmit} className="space-y-4 text-left">
+                {/* Name */}
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-teal-100 mb-1">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
+                    placeholder="John Smith"
+                  />
+                  {fieldErrors.name && (
+                    <p className="text-red-400 text-xs mt-1">{fieldErrors.name}</p>
+                  )}
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-teal-100 mb-1">
+                    Work Email *
+                  </label>
                   <input
                     type="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    placeholder="Enter your email address"
-                    required
-                    className={`w-full px-4 py-2 bg-white/10 backdrop-blur-sm border rounded-lg text-white placeholder-teal-200 focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all duration-200 text-sm ${
-                      emailError ? 'border-red-400/50' : 'border-white/30'
-                    }`}
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
+                    placeholder="john@company.com"
                   />
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-teal-500/20 to-indigo-500/20 opacity-0 focus-within:opacity-100 transition-opacity pointer-events-none" />
+                  {fieldErrors.email && (
+                    <p className="text-red-400 text-xs mt-1">{fieldErrors.email}</p>
+                  )}
                 </div>
-                
-                {emailError && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-red-300 text-xs bg-red-500/20 border border-red-500/30 rounded-lg p-2"
-                  >
-                    {emailError}
-                  </motion.div>
-                )}
-                
-                <Button 
-                  type="submit" 
-                  disabled={isLoading || !!emailError || !email}
-                  className="w-full bg-gradient-to-r from-teal-500 to-indigo-600 hover:from-teal-600 hover:to-indigo-700 text-white shadow-2xl hover:shadow-teal-500/25 font-bold border-0 relative overflow-hidden group text-sm" 
-                  size="sm"
-                >
-                  <span className="relative z-10">
-                    {isLoading ? 'Sending...' : leadMagnet.cta}
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Button>
-                
-                {error && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-red-300 text-xs text-center bg-red-500/20 border border-red-500/30 rounded-lg p-2"
-                  >
-                    {error}
-                  </motion.div>
-                )}
-              </motion.form>
 
-              {/* Trust indicators */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="flex items-center justify-center gap-3 mt-3 text-teal-200 text-xs"
-              >
-                <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full" />
-                  <span>Instant download</span>
+                {/* Company */}
+                <div>
+                  <label htmlFor="company" className="block text-sm font-medium text-teal-100 mb-1">
+                    Company Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
+                    placeholder="Acme Corp"
+                  />
+                  {fieldErrors.company && (
+                    <p className="text-red-400 text-xs mt-1">{fieldErrors.company}</p>
+                  )}
                 </div>
-                <div className="w-1 h-1 bg-teal-300 rounded-full" />
-                <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full" />
-                  <span>Unsubscribe anytime</span>
+
+                {/* Role */}
+                <div>
+                  <label htmlFor="role" className="block text-sm font-medium text-teal-100 mb-1">
+                    Your Role *
+                  </label>
+                  <input
+                    type="text"
+                    id="role"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
+                    placeholder="CEO, CTO, Operations Director, etc."
+                  />
+                  {fieldErrors.role && (
+                    <p className="text-red-400 text-xs mt-1">{fieldErrors.role}</p>
+                  )}
                 </div>
-              </motion.div>
+
+                {/* Challenge */}
+                <div>
+                  <label htmlFor="challenge" className="block text-sm font-medium text-teal-100 mb-1">
+                    Biggest AI Challenge *
+                  </label>
+                  <select
+                    id="challenge"
+                    name="challenge"
+                    value={formData.challenge}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
+                  >
+                    <option value="" className="bg-gray-900">Select one...</option>
+                    <option value="dont-know-where-to-start" className="bg-gray-900">Don't know where to start</option>
+                    <option value="team-overwhelmed" className="bg-gray-900">Team is overwhelmed with manual work</option>
+                    <option value="tried-ai-failed" className="bg-gray-900">Tried AI tools but they didn't work</option>
+                    <option value="security-compliance" className="bg-gray-900">Security and compliance concerns</option>
+                    <option value="measuring-roi" className="bg-gray-900">Can't measure ROI on AI investments</option>
+                    <option value="governance-needed" className="bg-gray-900">Need governance framework</option>
+                    <option value="other" className="bg-gray-900">Something else</option>
+                  </select>
+                  {fieldErrors.challenge && (
+                    <p className="text-red-400 text-xs mt-1">{fieldErrors.challenge}</p>
+                  )}
+                </div>
+
+                {/* Error message */}
+                {error && (
+                  <div className="p-3 bg-red-500/20 border border-red-500/50 rounded-lg">
+                    <p className="text-red-200 text-sm">{error}</p>
+                  </div>
+                )}
+
+                {/* Submit button */}
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-teal-500 to-indigo-600 hover:from-teal-600 hover:to-indigo-700 text-white font-semibold shadow-2xl hover:shadow-teal-500/25 border-0"
+                >
+                  {isLoading ? 'Sending...' : 'Get Guide + Book Strategy Call'}
+                </Button>
+              </form>
+
+              <p className="text-teal-200/60 text-xs mt-4">
+                We'll send you the guide and a link to book a free 15-min strategy session
+              </p>
             </div>
           </>
         ) : (
+          // Success state
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="relative bg-transparent backdrop-blur-lg rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/20"
+            className="relative z-10 text-center p-8"
           >
-            {/* Success state background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-green-900 via-emerald-800 to-green-900">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(34,197,94,0.3)_0%,transparent_70%)]" />
-            </div>
-
-            <div className="relative z-10 text-center py-6 px-6">
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900" />
+            
+            <div className="relative">
               <motion.div
-                initial={{ scale: 0, rotate: -180 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
-                className="relative w-12 h-12 mx-auto mb-4"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 300, delay: 0.2 }}
+                className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-teal-500 to-indigo-600 rounded-full flex items-center justify-center shadow-2xl"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl blur-lg opacity-50" />
-                <div className="relative w-full h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-2xl">
-                  <CheckCircle className="text-white" size={16} />
-                </div>
+                <CheckCircle className="text-white" size={32} />
               </motion.div>
-              
+
               <motion.h3
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-xl font-bold text-white mb-2"
+                className="text-2xl font-bold mb-3"
               >
-               Your AI Guide is on the Way!
+                <span className="bg-gradient-to-r from-white via-teal-100 to-indigo-200 bg-clip-text text-transparent">
+                  Check Your Inbox!
+                </span>
               </motion.h3>
-              
+
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-green-100 text-sm"
+                className="text-teal-100 leading-relaxed mb-4"
               >
-               Your <span className="font-semibold text-white">AI Readiness Checklist + 5 Questions Guide</span> is heading to{' '}
-               <span className="font-semibold text-white">{email}</span>
-               <br /><br />
-               <span className="text-xs text-green-200">
-                 Check your inbox (and spam folder) in the next few minutes.
-               </span>
+                We've sent you the AI Readiness Guide and a link to book your strategy session.
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-teal-200/70 text-sm"
+              >
+                Don't see it? Check your spam folder or email{' '}
+                <a href="mailto:irvin@futurecrafters.ai" className="text-teal-400 hover:text-teal-300 underline">
+                  irvin@futurecrafters.ai
+                </a>
               </motion.p>
             </div>
           </motion.div>
