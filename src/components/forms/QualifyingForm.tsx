@@ -63,7 +63,7 @@ export function QualifyingForm() {
     }
 
     try {
-      const response = await fetch('https://hook.us2.make.com/e8wop1bgci021mvbb4spbjl2xvzn6qjo', {
+      const response = await fetch('https://hook.us2.make.com/4xdjz1ckeeuqyoe7jcrkme1xkje621r2', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
