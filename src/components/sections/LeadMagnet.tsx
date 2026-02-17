@@ -16,20 +16,14 @@ interface LeadMagnetProps {
 }
 
 interface FormData {
-  name: string;
   email: string;
-  company: string;
-  role: string;
-  challenge: string;
+  name: string;
 }
 
 export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
   const [formData, setFormData] = useState<FormData>({
-    name: '',
     email: '',
-    company: '',
-    role: '',
-    challenge: ''
+    name: ''
   });
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +35,7 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
     return emailRegex.test(email);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     // Clear field error when user starts typing
@@ -56,18 +50,14 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
     setError('');
     setFieldErrors({});
 
-    // Validate all fields
+    // Validate email
     const errors: Partial<FormData> = {};
     
-    if (!formData.name.trim()) errors.name = 'Name is required';
     if (!formData.email.trim()) {
       errors.email = 'Email is required';
     } else if (!validateEmail(formData.email)) {
       errors.email = 'Please enter a valid email';
     }
-    if (!formData.company.trim()) errors.company = 'Company name is required';
-    if (!formData.role.trim()) errors.role = 'Role is required';
-    if (!formData.challenge || formData.challenge === '') errors.challenge = 'Please select a challenge';
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
@@ -83,12 +73,9 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
           email: formData.email,
-          company: formData.company,
-          role: formData.role,
-          challenge: formData.challenge,
-          source: 'AI Readiness Guide',
+          name: formData.name || '',
+          source: 'Homepage Modal',
           timestamp: new Date().toISOString()
         })
       });
@@ -98,12 +85,12 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
       }
 
       setSubmitted(true);
-      // Auto-close after 6 seconds
+      // Auto-close after 5 seconds
       setTimeout(() => {
         onClose();
         setSubmitted(false);
-        setFormData({ name: '', email: '', company: '', role: '', challenge: '' });
-      }, 6000);
+        setFormData({ email: '', name: '' });
+      }, 5000);
     } catch (err) {
       setError('Something went wrong. Please try again or email irvin@futurecrafters.ai directly.');
       console.error('Submission error:', err);
@@ -180,10 +167,10 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-4 text-left">
-                {/* Name */}
+                {/* Name (Optional) */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-teal-100 mb-1">
-                    Full Name *
+                    Name <span className="text-teal-300/60 text-xs">(optional)</span>
                   </label>
                   <input
                     type="text"
@@ -191,18 +178,15 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
                     placeholder="John Smith"
                   />
-                  {fieldErrors.name && (
-                    <p className="text-red-400 text-xs mt-1">{fieldErrors.name}</p>
-                  )}
                 </div>
 
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-teal-100 mb-1">
-                    Work Email *
+                    Email Address *
                   </label>
                   <input
                     type="email"
@@ -210,75 +194,12 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
-                    placeholder="john@company.com"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
+                    placeholder="you@company.com"
+                    required
                   />
                   {fieldErrors.email && (
                     <p className="text-red-400 text-xs mt-1">{fieldErrors.email}</p>
-                  )}
-                </div>
-
-                {/* Company */}
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-teal-100 mb-1">
-                    Company Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
-                    placeholder="Acme Corp"
-                  />
-                  {fieldErrors.company && (
-                    <p className="text-red-400 text-xs mt-1">{fieldErrors.company}</p>
-                  )}
-                </div>
-
-                {/* Role */}
-                <div>
-                  <label htmlFor="role" className="block text-sm font-medium text-teal-100 mb-1">
-                    Your Role *
-                  </label>
-                  <input
-                    type="text"
-                    id="role"
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
-                    placeholder="CEO, CTO, Operations Director, etc."
-                  />
-                  {fieldErrors.role && (
-                    <p className="text-red-400 text-xs mt-1">{fieldErrors.role}</p>
-                  )}
-                </div>
-
-                {/* Challenge */}
-                <div>
-                  <label htmlFor="challenge" className="block text-sm font-medium text-teal-100 mb-1">
-                    Biggest AI Challenge *
-                  </label>
-                  <select
-                    id="challenge"
-                    name="challenge"
-                    value={formData.challenge}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent backdrop-blur-sm"
-                  >
-                    <option value="" className="bg-gray-900">Select one...</option>
-                    <option value="dont-know-where-to-start" className="bg-gray-900">Don't know where to start</option>
-                    <option value="team-overwhelmed" className="bg-gray-900">Team is overwhelmed with manual work</option>
-                    <option value="tried-ai-failed" className="bg-gray-900">Tried AI tools but they didn't work</option>
-                    <option value="security-compliance" className="bg-gray-900">Security and compliance concerns</option>
-                    <option value="measuring-roi" className="bg-gray-900">Can't measure ROI on AI investments</option>
-                    <option value="governance-needed" className="bg-gray-900">Need governance framework</option>
-                    <option value="other" className="bg-gray-900">Something else</option>
-                  </select>
-                  {fieldErrors.challenge && (
-                    <p className="text-red-400 text-xs mt-1">{fieldErrors.challenge}</p>
                   )}
                 </div>
 
@@ -293,14 +214,14 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-teal-500 to-indigo-600 hover:from-teal-600 hover:to-indigo-700 text-white font-semibold shadow-2xl hover:shadow-teal-500/25 border-0"
+                  className="w-full bg-gradient-to-r from-teal-500 to-indigo-600 hover:from-teal-600 hover:to-indigo-700 text-white text-lg font-bold py-4 shadow-2xl hover:shadow-teal-500/25 border-0"
                 >
-                  {isLoading ? 'Sending...' : 'Get Guide + Book Strategy Call'}
+                  {isLoading ? 'Sending...' : 'Get Free Access'}
                 </Button>
               </form>
 
               <p className="text-teal-200/60 text-xs mt-4">
-                We'll send you the guide and a link to book a free 15-min strategy session
+                📧 Instant email delivery • No spam, ever
               </p>
             </div>
           </>
@@ -338,18 +259,29 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-teal-100 leading-relaxed mb-4"
+                className="text-teal-100 text-lg leading-relaxed mb-4"
               >
-                We've sent you the AI Readiness Guide and a link to book your strategy session.
+                📧 Check your inbox! We just sent you:
               </motion.p>
+              
+              <motion.ul
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-teal-100/90 text-left space-y-2 mb-4"
+              >
+                <li>✓ Link to your AI Readiness Guide</li>
+                <li>✓ Free 15-minute strategy call booking link</li>
+                <li>✓ Bonus: Quick-start AI implementation tips</li>
+              </motion.ul>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.6 }}
                 className="text-teal-200/70 text-sm"
               >
-                Don't see it? Check your spam folder or email{' '}
+                Don't see it? Check spam or email{' '}
                 <a href="mailto:irvin@futurecrafters.ai" className="text-teal-400 hover:text-teal-300 underline">
                   irvin@futurecrafters.ai
                 </a>
