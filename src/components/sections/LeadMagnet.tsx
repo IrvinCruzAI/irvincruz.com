@@ -67,7 +67,7 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
 
     try {
       // Send to Make.com webhook
-      const response = await fetch('https://hook.us2.make.com/4xdjz1ckeeuqyoe7jcrkme1xkje621r2', {
+      const response = await fetch('https://hook.us2.make.com/e8wop1bgci021mvbb4spbjl2xvzn6qjo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
