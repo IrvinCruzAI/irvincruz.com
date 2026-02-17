@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Download, Mail, CheckCircle, Sparkles, Users, TrendingUp, X } from 'lucide-react';
 import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
-import { supabase } from '../../lib/supabase';
 
 interface LeadMagnetProps {
   leadMagnet: {
@@ -56,36 +55,18 @@ export function LeadMagnet({ leadMagnet, isOpen, onClose }: LeadMagnetProps) {
     }
 
     try {
-      // Save to database
-      const { error: dbError } = await supabase
-        .from('lead_submissions')
-        .insert({
+      // Send to Make.com webhook
+      await fetch('https://hook.us2.make.com/e8wop1bgci021mvbb4spbjl2xvzn6qjo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           email: email,
-          source: 'AI Readiness Checklist',
-          ip_address: null,
-          user_agent: navigator.userAgent
-        });
-
-      if (dbError) {
-        throw new Error('Failed to save lead submission');
-      }
-
-      // Also send to Make webhook for existing automation
-      try {
-        await fetch('https://hook.us2.make.com/e8wop1bgci021mvbb4spbjl2xvzn6qjo', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-            source: 'AI Readiness Checklist + 5 Questions Guide',
-            timestamp: new Date().toISOString()
-          })
-        });
-      } catch (webhookErr) {
-        console.warn('Webhook notification failed, but lead was saved:', webhookErr);
-      }
+          source: 'AI Readiness Checklist + 5 Questions Guide',
+          timestamp: new Date().toISOString()
+        })
+      });
 
       setSubmitted(true);
       // Auto-close after 5 seconds to give user time to read
